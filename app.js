@@ -8,9 +8,7 @@ app.use(express.static("public"))
 app.use(cors())
 app.use(bodyParser.json())
 
-app.use(routes)
+// app.use(routes)
 
-sequelize.sync().then(() => {
-    app.listen(4000)
-})
+app.listen(4000)
 
