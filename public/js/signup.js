@@ -1,6 +1,7 @@
 function validateForm(myform, event){
     try{
         event.preventDefault();
+        console.log(event);
         if(!checkLengthName(myform.userName)){
             return false;
         }
@@ -13,9 +14,10 @@ function validateForm(myform, event){
         if(!checkPasswordMatch(myform.userPassword, myform.userPasswordRepeat)){
             return false;
         }
-        if(!createUser(myform)){
+        if(!checkValidEmail(myform.userEmail)){
             return false;
         }
+        saveUser(myform);
     }
     catch(err){
         console.error(err);
@@ -34,8 +36,23 @@ function userCreationSuccess(message){
     }
 }
 
+//Check if the email is already registered
+async function checkValidEmail(input){
+    try{
+        const result = await axios.get(`/user/checkUser/${input.value}`)
+                    .then(result => {return result.data})
+        if(result){
+            showError(input, `Email already exists`);
+            return false;
+        }
+    }
+    catch(err){
+        console.error(err);
+    }
+}
+
 //save the user data
-async function createUser(myform){
+async function saveUser(myform){
     try{
         const UserData = {
             userName : myform.userName.value,
@@ -54,6 +71,7 @@ async function createUser(myform){
         console.error(err);
     }
 }
+
 
 // Data Validations //
 
