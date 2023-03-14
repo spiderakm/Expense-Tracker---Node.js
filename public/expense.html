@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>expense tracker</title>
+</head>
+<style>
+    body{
+        justify-content: center;
+        background-color: rgb(255, 254, 254);
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    #form{
+        margin-top: 50px;
+        padding-bottom: 50px;
+        text-decoration: none;
+      background-color: rgb(146, 141, 109);
+      background-repeat: no-repeat;
+        background-size: cover;
+      text-align: center;
+      border-radius: 15px;
+    }
+    .heading{
+        font-weight: bolder;
+        font-size: 40px;
+       
+    }
+    /* .container{
+     max-width: 90%;
+     width:50%;
+        
+    } */
+    label{
+            font-weight:bolder ;
+            color: rgb(0, 2, 8);
+            font-size: larger;
+        }
+    input{
+        width: 75%;
+        height: 40px;
+        border-radius: 15px;
+        font-family: inherit;
+    }
+    select{
+        width: 75%;
+        font-family: inherit;
+        height: 40px;
+        border-radius: 8px;
+    }
+    ol{
+        text-decoration:none;
+        font-weight: bolder;
+    }
+    #press{
+        background-color: rgb(68, 98, 232);
+    }
+    #press:hover{
+        background-color: rgb(245, 245, 6);
+    }
+    li{
+        margin-top: 13px;
+        padding: 5px;
+    }
+</style>
+<body>
+   <main>
+    <div class="container">
+    <form action="#" id="form">
+        <div class="heading">Expense tracker</div><br>
+        <div id="error"></div>
+        <label for="amount" class="bg-transparent">Choose Expense Amount:</label><br>
+        <input type="number"  id="amount"  required>
+        <br>
+        <label for="description">Choose Description:</label><br>
+        <input type="text" id="description"  pattern=[A-Za-z] required>
+        <br>
+        <label for="category">Choose Category:</label><br>
+        <select name="category" id="category"  required>
+            <option value="" selected>--Please choose an option--</option>
+            <option value="movies">movies</option>
+            <option value="fuel">fuel</option>
+            <option value="electricity">electricity</option>
+            <option value="food">food</option>
+            <option value="food">Salary</option>
+        </select><br>
+        <br>
+        <input type="button" class="btn btn-control" id="press" value="submit">
+        <br><br>
+        <ol id="allExpenses"></ol>
+</form>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/public/js/expense.js"></script>
+</body>
+</html>

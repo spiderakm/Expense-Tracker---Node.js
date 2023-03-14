@@ -27,6 +27,7 @@ exports.createNewUser = async (req, res) => {
                 email: req.body.userEmail,
                 password: encryptPassword
             }).then(result => {
+                
                 res.send('User Created Successfully');
             }).catch(err => {
                 res.send('Something went wrong!')
@@ -57,9 +58,10 @@ exports.authenticateUser = async (req,res) => {
         }else{
             const passwordMatch = await bcrypt.compare(req.body.userPassword,user.password)
             if(passwordMatch){
-                res.send("User logged in Succesfully")
+                res.redirect("http://localhost:4000/expense/add-expense")   
+                // res.send("User logged in Succesfully")
             }else{
-                res.status(401).send("wrong Email or Password")
+                res.status(401).send("Wrong Email or Password")
             }
         }
 
