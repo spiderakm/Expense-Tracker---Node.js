@@ -1,18 +1,16 @@
-const express = require('express')
-const app = express()
-const bodyParser=require("body-parser")
-const sequelize = require('./models/userModel')
-const cors=require("cors")
-const Userroutes = require('./routes/user')
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 
-app.use(cors())
-app.use(bodyParser.urlencoded({extended: true}));
-// app.use(express.static('public'))
+const userRoutes = require('./routes/user');
+const sequelize = require('./models/userModel');
 
+// app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(express.static('public'));
 
-app.use('/user',Userroutes)
+app.use('/user', userRoutes);
 
-sequelize.sync().then(() => {
-    app.listen(4000)
-})
+sequelize.sync();
 
+app.listen(4000);
