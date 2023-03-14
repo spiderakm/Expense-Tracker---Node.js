@@ -7,7 +7,9 @@ exports.signupForm = (req, res) => {
     res.sendFile(path.join(rootDir, 'public', 'signup.html'));
 }
 
-
+exports.loginForm = (req,res) => {
+    res.sendFile(path.join(rootDir, 'public', 'login.html'));
+}
 
 exports.createNewUser = async (req, res) => {
     try{
@@ -44,3 +46,24 @@ exports.checkUser = async (req, res) =>{
     }
 }
 
+
+exports.authenticateUser = async (req,res) => {
+    try {
+        const user = await User.findOne({
+            where:{
+                email:req.body.userEmail
+            }
+        });
+        if(!user){
+            res.status(404).send("user not found please Signup")
+        }else{
+            if(user.password === req.body.userPassword){
+                res.send("User logged in Succesfully")
+            }else{
+                res.status(401).send("user not authorized")
+            }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
