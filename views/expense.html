@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense features</title>
+</head>
+<body>
+    <header>
+        <h1>Expense tracker</h1>
+    </header>
+    <main>
+        <form action="#">
+            <label for="amount">Choose Expense Amount:</label>
+            <input type="number" id="amount" class="amount" name="amount">
+            <label for="description">Choose description:</label>
+            <input type="text" name="description" id="description">
+            <label for="category">Choose category:</label>
+            <select name="cate" id="category">
+                <option value="fuel">fuel</option>
+                <option value="food">food</option>
+                <option value="party">party</option>
+                <option value="bills">bills</option>
+            </select>
+            <button id="expense">Add Expense</button>
+        </form>
+        <ul id="allExpenses"></ul>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="expense.js"></script>
+</body>
+</html>

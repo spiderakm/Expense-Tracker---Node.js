@@ -1,27 +1,22 @@
 const Sequelize = require('sequelize')
-const sequelize = require('../utils/db')
+const sequelize = require("../utils/db")
 
-const allDetails = sequelize.define("allExpenses",{
+const expensedb=sequelize.define("expenseDetail",{
     id:{
         type:Sequelize.INTEGER,
-        primaryKey:true,
+        autoIncrement:true,
         allowNull:false,
-        autoIncrement:true
+        primaryKey:true
     },
     amount:{
-        type:Sequelize.BIGINT,
-        allowNull:false
+        type:Sequelize.BIGINT
     },
     description:{
-        type:Sequelize.STRING,
-        allowNull:false
+        type:Sequelize.STRING
     },
     category:{
-        type:Sequelize.STRING,
-        allowNull:false
+        type:Sequelize.STRING
     }
-
-
 })
 
-module.exports = allDetails
+module.exports=expensedb
