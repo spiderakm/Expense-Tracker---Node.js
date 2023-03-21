@@ -5,11 +5,13 @@ exports.addExpense=async(req,res)=>{
         const amount=req.body.amount
         const description=req.body.description
         const category=req.body.category
+
         console.log(amount,description,category)
         const data=await expenseDb.create({
             amount:amount,
             description:description,
-            category:category
+            category:category,
+            userId:expenseId
         })
         res.json({newExpense:data})
     }
@@ -22,7 +24,8 @@ exports.addExpense=async(req,res)=>{
 //Fetching all the expenses from the database
 exports.getExpense=async(req,res)=>{
     try{
-        const data=await expenseDb.findAll()
+        id = req.user.id
+        const data=await expenseDb.findAll({ where : {userId:id} })
         res.json({allExpenses:data})
     }catch(err){
         console.log("error in fetching data from database")
@@ -33,8 +36,8 @@ exports.getExpense=async(req,res)=>{
 //deleting the expense from the database
 exports.deleteExpense=async(req,res)=>{
     try{
-        const expenseId=req.params.id
-       const data=await expenseDb.destroy({where:{id:expenseId}})
+        const deleteId=req.params.id
+       const data=await expenseDb.destroy({where:{id:deleteId}})
     }catch(err){
         console.log("error in delete expense database")
         res.json({Error:err})

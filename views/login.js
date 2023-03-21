@@ -22,6 +22,7 @@ async function loginPage(e){
             setTimeout(()=>{
                 loginError.removeChild(errorText)
             },3000)
+            
         }
 
      //If email and password are valid
@@ -32,6 +33,7 @@ async function loginPage(e){
         setTimeout(()=>{
             loginSuccess.removeChild(successText)
         },3000)
+        localStorage.setItem('token', data.data.token)
         window.location.href = "./expense.html"
     }
 }catch{
