@@ -8,8 +8,8 @@ const {
     validatePassword
   } = require('../utils/validate')
 
-function genrateToken(id){
-    return jwt.sign({ UserId : id },"44d210c98f36c60b0b0a336bd537fdd0305cefee41aa7e8d73aca3f150ab8f38265bb32731c2c3a296327027ce4ddf4a569d2aa9e5e9494badcb6e9eb66899ad")
+function genrateToken(id,premium){
+    return jwt.sign({ UserId : id,premium },"44d210c98f36c60b0b0a336bd537fdd0305cefee41aa7e8d73aca3f150ab8f38265bb32731c2c3a296327027ce4ddf4a569d2aa9e5e9494badcb6e9eb66899ad")
 }
 
 exports.createNewUser = async (req, res) => {
@@ -19,7 +19,7 @@ exports.createNewUser = async (req, res) => {
 
         const user =  await User.findOne({
             where:{
-                email
+                email:email
             }
         })
         
@@ -71,7 +71,7 @@ exports.authenticateUser = async (req,res) => {
             const passwordMatch = await bcrypt.compare(req.body.password,user.password)
             if(passwordMatch){
                 // res.redirect("http://localhost:4000/expense/add-expense")   
-                res.json({success:"Successfully logged In", token : genrateToken(user.id)})
+                res.json({success:"Successfully logged In", token : genrateToken(user.id,user.premium)})
                 //console.log(user.id)
             }else{
                 res.json({success:false,message:"Wrong Email or Password"})

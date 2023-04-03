@@ -4,81 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Style for header */
-header {
-  background-color: black;
-  color: white;
-  text-align: center;
-  padding: 20px;
-}
-
-/* Style for form */
-form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  width: 50%;
-  margin: 0 auto;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-input[type="number"], input[type="text"], select {
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  border: none;
-  background-color: #252525;
-  color: white;
-}
-
-button {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #3e8e41;
-}
-
-/* Style for expenses list */
-#allExpenses {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  background-color: #252525;
-  color: white;
-}
-
-li span {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-/* Responsive design for mobile devices */
-@media only screen and (max-width: 600px) {
-  form {
-    width: 80%;
-  }
-}
-
-    </style>
     <title>Expense features</title>
+    <style>
+        /* Add some basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        form {
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="number"],
+        input[type="text"],
+        select {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3e8e41;
+        }
+        .right-button {
+            float: right;
+        }
+        ul {
+            margin: 20px;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        li span {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -98,7 +86,12 @@ li span {
                 <option value="bills">bills</option>
             </select>
             <button id="expense">Add Expense</button>
+            <div class="right-button">
+                <button id="razorpay"> Buy Premium Membership</button>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            </div>
         </form>
+        <div id="addText"></div>
         <ul id="allExpenses"></ul>
     </main>
 
