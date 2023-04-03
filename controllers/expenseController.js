@@ -1,34 +1,38 @@
-const expenseDb = require('../models/expenseModel')
+const expensedatabase=require('../models/expenseModel')
 
+//Adding the expense to the database
 exports.addExpense=async(req,res)=>{
     try{
         const amount=req.body.amount
         const description=req.body.description
         const category=req.body.category
-
-        console.log(amount,description,category)
-        const data=await expenseDb.create({
+        const id = req.user.id
+        
+        const data=await expensedatabase.create({
             amount:amount,
             description:description,
             category:category,
-            userId:expenseId
+            UserId:id
+            
+            
         })
         res.json({newExpense:data})
     }
     catch(err){
-        console.log("addExpense error-->",err)
+        console.log(err)
         res.json({Error:err})
     }
 }
 
 //Fetching all the expenses from the database
 exports.getExpense=async(req,res)=>{
+
     try{
-        id = req.user.id
-        const data=await expenseDb.findAll({ where : {userId:id} })
+        const id = req.user.id
+        const data=await expensedatabase.findAll({where:{userId:id}})
         res.json({allExpenses:data})
     }catch(err){
-        console.log("error in fetching data from database")
+
         res.json({Error:err})
     }
 }
@@ -36,8 +40,8 @@ exports.getExpense=async(req,res)=>{
 //deleting the expense from the database
 exports.deleteExpense=async(req,res)=>{
     try{
-        const deleteId=req.params.id
-       const data=await expenseDb.destroy({where:{id:deleteId}})
+        const deleteExpenseId=req.params.id
+       const data=await expensedatabase.destroy({where:{id:deleteExpenseId,UserId:req.user.id}})
     }catch(err){
         console.log("error in delete expense database")
         res.json({Error:err})

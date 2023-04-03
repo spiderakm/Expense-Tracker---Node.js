@@ -8,8 +8,8 @@ const {
     validatePassword
   } = require('../utils/validate')
 
-function genrateToken(id,name){
-    return jwt.sign({ userId : id },"44d210c98f36c60b0b0a336bd537fdd0305cefee41aa7e8d73aca3f150ab8f38265bb32731c2c3a296327027ce4ddf4a569d2aa9e5e9494badcb6e9eb66899ad")
+function genrateToken(id){
+    return jwt.sign({ UserId : id },"44d210c98f36c60b0b0a336bd537fdd0305cefee41aa7e8d73aca3f150ab8f38265bb32731c2c3a296327027ce4ddf4a569d2aa9e5e9494badcb6e9eb66899ad")
 }
 
 exports.createNewUser = async (req, res) => {
@@ -49,19 +49,6 @@ exports.createNewUser = async (req, res) => {
           }
         
         
-        // if(!user){
-        //     User.create({
-        //         name,
-        //         email,
-        //         password: Epassword
-        //     }).then(() => {
-        //         res.json({success:true,message:"Account Created Successfully"})
-        //     }).catch((err) => console.log(err))
-        // }else{
-        //     res.json({success:false,message:"Email Already Exist Please Login"})
-        // }
-        
-
  
     }
     catch(err){
@@ -85,7 +72,7 @@ exports.authenticateUser = async (req,res) => {
             if(passwordMatch){
                 // res.redirect("http://localhost:4000/expense/add-expense")   
                 res.json({success:"Successfully logged In", token : genrateToken(user.id)})
-                console.log(user.id)
+                //console.log(user.id)
             }else{
                 res.json({success:false,message:"Wrong Email or Password"})
             }

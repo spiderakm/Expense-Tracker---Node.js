@@ -39,7 +39,8 @@ async function deleteExpense(key){
     try{
         const oneExpense=document.getElementById(key)
         allExpenses.removeChild(oneExpense)
-        await axios.delete(`http://localhost:4000/expense/delete-expense/${key}`)
+        const token = localStorage.getItem('token')
+        await axios.delete(`http://localhost:4000/expense/delete-expense/${key}`,{ headers: {'Authorization' : token}})
        
     }catch(err){
         console.log("delete expeses error-->",err)
@@ -52,12 +53,15 @@ addExpense.addEventListener("click",postExpense)
 async function postExpense(e){
     try{
         e.preventDefault();
+
         const expense_obj={
             amount:amount.value,
             description:description.value,
             category:category.value
+            
         }
-        const data=await axios.post("http://localhost:4000/expense/add-expense",expense_obj)
+        const token = localStorage.getItem('token')
+        const data=await axios.post("http://localhost:4000/expense/add-expense", expense_obj, { headers: {'Authorization' : token}} )
             showOnScreen(data.data.newExpense)   
     }catch(err){
         console.log("addExpense Error->",err)

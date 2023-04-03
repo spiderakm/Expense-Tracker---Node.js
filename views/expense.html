@@ -4,6 +4,80 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Style for header */
+header {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Style for form */
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 50%;
+  margin: 0 auto;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="number"], input[type="text"], select {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #252525;
+  color: white;
+}
+
+button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+/* Style for expenses list */
+#allExpenses {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  background-color: #252525;
+  color: white;
+}
+
+li span {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Responsive design for mobile devices */
+@media only screen and (max-width: 600px) {
+  form {
+    width: 80%;
+  }
+}
+
+    </style>
     <title>Expense features</title>
 </head>
 <body>
@@ -27,9 +101,7 @@
         </form>
         <ul id="allExpenses"></ul>
     </main>
-    <footer>
 
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="expense.js"></script>
 </body>
