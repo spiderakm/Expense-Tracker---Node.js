@@ -55,7 +55,7 @@ exports.updatePremiumStatus = async (req,res,next) => {
             })
         }
         Promise.all([updateTable(result),updateUserTable()]).then(()=>{
-            res.json({success:true,message:"Premium purchased successfully",token:genrateToken(req.user.id,true)})
+            res.json({success:true,message:"Premium purchased successfully You are now a premium user",token:genrateToken(req.user.id,true)})
         })
 
 

@@ -20,11 +20,11 @@ window.addEventListener("DOMContentLoaded",async()=>{
    try{
 
         const token = localStorage.getItem('token')
-        const decodeToken=parseJwt(tokenId)
+        const decodeToken=parseJwt(token)
         console.log(decodeToken);
-        if(decodeToken.isPremium){
+        if(decodeToken.premium){
             document.getElementById("razorpay").style.visibility="hidden"
-            document.getElementById("addText").innerHTML="Premium purchased"
+            document.getElementById("addText").innerHTML="Premium User"
         }
         const data=await axios.get("http://localhost:4000/expense/get-expense", { headers: {'Authorization' : token}} )
         

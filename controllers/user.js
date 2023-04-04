@@ -19,7 +19,7 @@ exports.createNewUser = async (req, res) => {
 
         const user =  await User.findOne({
             where:{
-                email:email
+                email
             }
         })
         
