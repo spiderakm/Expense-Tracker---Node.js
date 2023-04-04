@@ -25,6 +25,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
         if(decodeToken.premium){
             document.getElementById("razorpay").style.visibility="hidden"
             document.getElementById("addText").innerHTML="Premium User"
+            showLeaderBoard()
         }
         const data=await axios.get("http://localhost:4000/expense/get-expense", { headers: {'Authorization' : token}} )
         
@@ -119,4 +120,30 @@ e.preventDefault()
     
     alert(response.data.message)
 })
+}
+
+async function showLeaderBoard(){
+    try{
+        const buttonLeaderBoard=document.createElement("input")
+        buttonLeaderBoard.type="button"
+        buttonLeaderBoard.value="Show LeaderBoard"
+       document.getElementById("addText").appendChild(buttonLeaderBoard)
+        console.log(buttonLeaderBoard)
+        buttonLeaderBoard.onclick=async function(e){
+            e.preventDefault()
+            const token=localStorage.getItem("token")
+           const response= await axios.get("http://localhost:4000/premium/leaderBoard",{headers:{"Authorization":token}})
+            console.log(response.data[1])
+            const parent=document.getElementById("leaderboard")
+            response.data.forEach(ele => {
+                if(ele.total_amount===null){
+                    ele.total_amount=0
+                }
+              const child=  `<li>Name-->${ele.name}&nbsp;---Total Amount-->${ele.totalCost}</li>`
+              parent.innerHTML=parent.innerHTML+child
+            });
+        }
+    }catch(err){
+        console.log("err in showLeaderBoard")
+    }
 }

@@ -5,6 +5,7 @@ const cors=require("cors")
 const signup=require("./routes/user")
 const expenseDetail=require("./routes/expenseRoute")
 const orderRoute = require('./routes/order')
+const premiumRoute = require('./routes/premiumRoute')
 
 const sequelize=require("./utils/db")
 const User=require("./models/userModel")
@@ -18,7 +19,7 @@ app.use(bodyParser.json())
 app.use("/user",signup)
 app.use("/expense",expenseDetail)
 app.use("/purchase",orderRoute)
-
+app.use("/premium",premiumRoute)
 
 
 
