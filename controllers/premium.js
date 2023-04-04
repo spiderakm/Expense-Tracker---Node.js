@@ -5,17 +5,15 @@ const { use } = require('../routes/user')
 
 exports.getLeaderBoard = async (req,res) => {
     try {
-        const users = await User.findAll()
-        const expenses = await Expense.findAll()
-        const userAggrigatedExpenses = {}
-        expenses.forEach(expense => {
-            if(userAggrigatedExpenses[expense.UserId]){
-                userAggrigatedExpenses[expense.UserId] = userAggrigatedExpenses[expense.UserId] + expense.amount
-            }else{
-                userAggrigatedExpenses[expense.UserId] = expense.amount
-            }
-            
-        });
+        const users = await User.findAll({
+            attributes: ['id','name']
+        })
+        const userAggrigatedExpenses = await Expense.findAll({
+            attributes: ['UserId',[sequelize.fn('sum',sequelize.col('expenses.amount')),'totalCost']],
+            group: ['UserId']
+        })
+
+        
         var userLeaderBoardDetails = []
         users.forEach((user) => {
             userLeaderBoardDetails.push({name:user.name,totalCost : userAggrigatedExpenses[user.id]})
