@@ -136,8 +136,8 @@ async function showLeaderBoard(){
             console.log(response.data[1])
             const parent=document.getElementById("leaderboard")
             response.data.forEach(ele => {
-                if(ele.total_amount===null){
-                    ele.total_amount=0
+                if(ele.totalCost===null){
+                    ele.totalCost=0
                 }
               const child=  `<li>Name-->${ele.name}&nbsp;---Total Amount-->${ele.totalCost}</li>`
               parent.innerHTML=parent.innerHTML+child
