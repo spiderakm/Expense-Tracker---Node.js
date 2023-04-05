@@ -133,13 +133,13 @@ async function showLeaderBoard(){
             e.preventDefault()
             const token=localStorage.getItem("token")
            const response= await axios.get("http://localhost:4000/premium/leaderBoard",{headers:{"Authorization":token}})
-            console.log(response.data[1])
+            console.log(response.data)
             const parent=document.getElementById("leaderboard")
             response.data.forEach(ele => {
-                if(ele.totalCost===null){
-                    ele.totalCost=0
+                if(ele.totalAmount===null){
+                    ele.totalAmount=0
                 }
-              const child=  `<li>Name-->${ele.name}&nbsp;---Total Amount-->${ele.totalCost}</li>`
+              const child=  `<li>Name-->${ele.name}&nbsp;---Total Amount-->${ele.totalAmount}</li>`
               parent.innerHTML=parent.innerHTML+child
             });
         }
