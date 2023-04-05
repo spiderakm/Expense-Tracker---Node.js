@@ -139,7 +139,7 @@ async function showLeaderBoard(){
                 if(ele.totalAmount===null){
                     ele.totalAmount=0
                 }
-              const child=  `<li>Name-->${ele.name}&nbsp;---Total Amount-->${ele.totalAmount}</li>`
+              const child=  `<li>Name---${ele.name}&nbsp;---Total Cost---${ele.totalAmount}</li>`
               parent.innerHTML=parent.innerHTML+child
             });
         }

@@ -4,30 +4,24 @@ const userDb = require('../models/userModel')
 
 //Adding the expense to the database
 exports.addExpense=async(req,res)=>{
+    const t = await sequelize.transaction()
     try{
-        const amount=req.body.amount
-        const description=req.body.description
-        const category=req.body.category
-        const Id = req.user.id
-        
-        const data=await expensedatabase.create({
-            amount:amount,
-            description:description,
-            category:category,
-            UserId:Id
-        })
+        const {amount,description,category} = req.body;
+        const data = await expensedatabase.create(
+            { amount, description, category, UserId: req.user.id },
+            { transaction: t }
+          );
         const totalExpenses = Number(req.user.totalAmount) + Number(amount)
-        userDb.update({
-            totalAmount : totalExpenses
-        },{
-            where: {id:req.user.id}
-        }
-        )
-
+        await userDb.update(
+            { totalAmount: totalExpenses },
+            { where: { id: req.user.id }, transaction: t } 
+          );
+        await t.commit();
         res.json({newExpense:data})
     }
     catch(err){
         console.log(err)
+        await t.rollback();
         res.json({Error:err})
     }
 }
