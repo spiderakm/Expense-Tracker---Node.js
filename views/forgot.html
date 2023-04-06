@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>forgot password</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-    <form >
-        <label for="email">Email</label>
-            <input type="email" id="email" class="email" >
-            <input type="button" value="submit" id="forgotButton">
+    <form onsubmit="forgotpassword(event)">
+        <input type="email" name="email" required>
+        <button> Send Mail</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./forgot.js"></script>
+
 </body>
 </html>

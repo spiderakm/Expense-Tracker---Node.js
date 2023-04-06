@@ -1,6 +1,9 @@
 const express=require("express")
 const bodyParser=require("body-parser")
 const cors=require("cors")
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const signup=require("./routes/user")
 const expenseDetail=require("./routes/expenseRoute")
@@ -12,6 +15,7 @@ const sequelize=require("./utils/db")
 const User=require("./models/userModel")
 const Expense=require("./models/expenseModel")
 const Order = require('./models/orderModel')
+
 
 const app=express()
 app.use(cors())
