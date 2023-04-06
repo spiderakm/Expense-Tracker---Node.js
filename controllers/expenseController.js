@@ -32,6 +32,7 @@ exports.getExpense=async(req,res)=>{
     try{
         const id = req.user.id
         const data=await expensedatabase.findAll({where:{userId:id}})
+
         res.json({allExpenses:data})
     }catch(err){
 
@@ -58,4 +59,10 @@ exports.deleteExpense=async(req,res)=>{
         console.log("error in delete expense database")
         res.json({Error:err})
     }
+}
+
+exports.downloadReport = async (req,res) => {
+
+    //const expense = await req.User.getexpenseDetail()
+    console.log(req.user);
 }

@@ -4,8 +4,8 @@ const forgotController = require('../controllers/forgotPass')
 
 router.post('/forgotpassword', forgotController.forgotpassword)
 
-routes.get("/resetpassword/:id",forgotPassword.resetpassword)
+// routes.get("/resetpassword/:id",forgotPassword.resetpassword)
 
-routes.get("/updatepassword/:resetpassword",forgotPassword.updatepassword)
+// routes.get("/updatepassword/:resetpassword",forgotPassword.updatepassword)
 
 module.exports = router

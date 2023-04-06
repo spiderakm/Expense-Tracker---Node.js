@@ -1,55 +1,50 @@
 const sib=require("sib-api-v3-sdk")
 const uuid=require("uuid")
+const sgMail = require('@sendgrid/mail')
 const encrypt=require("bcrypt")
 require("dotenv").config()
+
+
 const user = require('../models/userModel')
 const forgotpassword = require('../models/forgotModle')
 
 exports.forgotpassword=async(req,res)=>{
     try{
-        const email=req.body.email
+        const { email } =  req.body;
         
         const userFound=await user.findOne({where:{email:email}})
         if(userFound){
-            console.log(userFound.__proto__)
+            // console.log(userFound.__proto__)
                 const id=uuid.v4()
-                await userFound.createForgotPassword({
+                userFound.createForgotPassword({
                         id,
                         isactive:true
                 })
-                const client=sib.ApiClient.instance
+                sgMail.setApiKey(process.env.SENGRID_API_KEY)
             
-                const apiKey=client.authentications['api-key']
-                apiKey.apiKey=process.env.SENDINBLUE_API_KEY
-                
-                const transEmailApi=new sib.TransactionalEmailsApi()
-            
-                const sender={
-                    email:"spider.akm@gmail.com"
+                const msg = {
+                    to: email, // Change to your recipient
+                    from: 'spider.akm@gmail.com', // Change to your verified sender
+                    subject: 'Reset Password link',
+                    text: 'click the reset password button to reset the password',
+                    html: `<a href="http://localhost:4000/password/resetpassword/${id}">Reset password</a>`,
                 }
-            
-                const receivers=[
-                    {
-                        email:email
-                    }
-                ]
-            
-            const data= await transEmailApi.sendTransacEmail({
-                    sender,
-                    to:receivers,
-                    subject:"this is the test subject",
-                    htmlContent:`
-                    <a href="http://100.26.11.136:4000/password/resetpassword/${id}">Reset password</a>
-                    `
+                sgMail
+                .send(msg)
+                .then((response) => {
+    
+                    console.log(response[0].statusCode)
+
+                    return res.status(response[0].statusCode).json({message: 'Link to reset password sent to your mail ', sucess: true})
+    
                 })
-        
-                console.log(data)
-                res.json({forgotdata:data,success:true})
-        }else{
-            console.log("user doesn't exist")
-            res.json({message:"user doesnt exist",success:false})
+                .catch((error) => {
+                    throw new Error(error);
+                })
         }
-       
+ 
+            
+
     }catch(err){
         console.log("error in forgot password-->",err)
         res.json({Error:err})
