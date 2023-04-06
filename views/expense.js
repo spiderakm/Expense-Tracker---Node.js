@@ -147,3 +147,22 @@ async function showLeaderBoard(){
         console.log("err in showLeaderBoard")
     }
 }
+
+
+function download(){
+    axios.get('http://localhost:4000/user/download', { headers: {"Authorization" : token} })
+    .then((response) => {
+        if(response.status === 201){
+            var a = document.createElement("a");
+            a.href = response.data.fileUrl;
+            a.download = 'myexpense.csv';
+            a.click();
+        } else {
+            throw new Error(response.data.message)
+        }
+
+    })
+    .catch((err) => {
+        showError(err)
+    });
+}
