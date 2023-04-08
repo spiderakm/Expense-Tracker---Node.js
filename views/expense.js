@@ -27,25 +27,74 @@ window.addEventListener("DOMContentLoaded",async()=>{
             document.getElementById("addText").innerHTML="Premium User"
             showLeaderBoard()
         }
-        const data=await axios.get("http://localhost:4000/expense/get-expense", { headers: {'Authorization' : token}} )
+        pagination()
         
-        console.log(data)
-        const allExpense=data.data.allExpenses
-        for(let i=0;i<allExpense.length;i++){
-            showOnScreen(allExpense[i])
-        }
+ 
         
    }catch(err){
     console.log("windowOnload error",err)
    }
 })
  
+async function pagination(){
+    try {
+        const token=localStorage.getItem("token")
+        const data=await axios.get("http://localhost:4000/expense/get-expense", { headers: {'Authorization' : token}} )
+  
+        const totalpage=Math.ceil((data.data.allExpenses.length)/totalPagesize)
+
+        const response=await axios.get(`http://localhost:4000/expense/pagination?page=${1}&pagesize=${5}`,{headers:{"Authorization":token}})
+            let allExpense=response.data.Data
+                        
+            for(let i=0;i<allExpense.length;i++){
+                
+                showOnScreen(response.data.Data[i])    
+                }
+
+                for(let i=0;i<totalpage;i++){
+                    let page=i+1
+                    button=document.createElement("button")
+                    button.innerHTML=i+1
+                    
+                    button.onclick=async()=>{
+                    allExpenses.innerHTML=""
+                    const response=await axios.get(`http://localhost:4000/expense/pagination?page=${page}&pagesize=${totalPagesize}`,{headers:{"Authorization":token}})
+                    let allExpense=response.data.Data
+                    for(let i=0;i<allExpense.length;i++){
+                        showOnScreen(response.data.Data[i])    
+                        }
+                    } 
+                pagination.appendChild(button)
+                }  
+
+
+        
+    } catch (error) {
+        console.log("pagination error");
+    }
+}
+
+
+
+
+
 //showing the data on the screen
 function showOnScreen(show){
     try{
-        const newExpense=`<li id=${show.id}>${show.amount}&nbsp;&nbsp;${show.description}&nbsp;&nbsp;
-        ${show.category}&nbsp;&nbsp;
-        <button onclick="deleteExpense(${show.id})">deleteExpense</button></li>`
+        const pagesize=document.getElementById("pagesize")
+        pagesize.addEventListener("click",()=>{
+            localStorage.setItem("pageSize",pagesize.value)
+            window.location.reload()
+           })
+           const newExpense=`<table id=${show.id} class="table text-white ">
+           <tr>
+           <td><li></li></td>
+           <td>${show.amount}</td>
+           <td>${show.description}</td>
+           <td>${show.category}</td>
+           <td><button onclick="deleteExpense(${show.id})" style="float:right" class="btn btn-danger" >delete</button></td>
+           </tr>
+           </table>`
         allExpenses.innerHTML=allExpenses.innerHTML+newExpense
     }catch(err){
         console.log("error in showscreen",err)

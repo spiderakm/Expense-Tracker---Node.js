@@ -5,68 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense features</title>
-    <style>
-        /* Add some basic styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-        h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        form {
-            margin: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="number"],
-        input[type="text"],
-        select {
-            display: block;
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #3e8e41;
-        }
-        .right-button {
-            float: right;
-        }
-        ul {
-            margin: 20px;
-            padding: 0;
-        }
-        li {
-            list-style: none;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-        }
-        li span {
-            font-weight: bold;
-        }
-    </style>
+
 </head>
 <body>
     <header>
@@ -92,10 +31,30 @@
                 <button onclick="download()" id="downloadexpense">Download File</button>
             </div>
         </form>
+        
+        <h2 class="allexpensetext">All Expenses</h2> 
         <div id="addText"></div>
-        <ul id="allExpenses"></ul>
-
+        
+        
         <ul id="leaderboard"></ul>
+        <div class="reportText h2 text-white" id="reportText"></div>
+        <div id="buttons"></div> <br><br>
+        
+        
+        <hr>  
+        <select name="pagesize" id="pagesize">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+        </select>
+        </table>
+        <ol id="allExpenses"></ol> 
+        <ul id="pagination"></ul>
+
+        
+        
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

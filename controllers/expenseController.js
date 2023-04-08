@@ -31,6 +31,7 @@ exports.addExpense=async(req,res)=>{
 exports.getExpense=async(req,res)=>{
 
     try{
+        totalamtdb=req.user
         const id = req.user.id
         const data=await expensedatabase.findAll({where:{userId:id}})
 
@@ -104,8 +105,9 @@ function uploadToS3(data,filename) {
                         rej('error in upload');
     
                     }else{
-                        console.log("kjbcdjk");
+                        
                         res('success',s3response);
+                        
                         
                     }
                 })
@@ -115,4 +117,21 @@ function uploadToS3(data,filename) {
         console.log(error);
     }
 
+}
+
+exports.paginateExpenses=async(req,res)=>{
+    try{
+        const page=req.query.page
+        const pagesize=req.query.pagesize
+        const limits=+pagesize
+      const data=  await expensedatabase.findAll({
+        offset:(page-1)*pagesize,
+        limit:limits,
+        where: { UserId:req.user.id }
+    })
+      res.json({Data:data})
+    }catch(err){
+        console.log("pagination error-->",err)
+        res.json({Error:err})
+    }
 }
