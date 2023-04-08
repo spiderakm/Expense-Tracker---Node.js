@@ -11,5 +11,7 @@ router.get("/get-expense",Userauthentication.userAuthontication,expenseControlle
 
 router.delete("/delete-expense/:id",Userauthentication.userAuthontication,expenseController.deleteExpense)
 
+router.get("/pagination",Userauthentication.userAuthontication,expenseController.paginateExpenses)
+
 
 module.exports = router;

@@ -40,9 +40,12 @@ async function pagination(){
     try {
         const token=localStorage.getItem("token")
         const data=await axios.get("http://localhost:4000/expense/get-expense", { headers: {'Authorization' : token}} )
-  
+        const pagination=document.getElementById("pagination")
+        const totalPagesize=localStorage.getItem("pageSize")
         const totalpage=Math.ceil((data.data.allExpenses.length)/totalPagesize)
-
+        if(!totalPagesize){
+            localStorage.setItem("pageSize",5)
+        }
         const response=await axios.get(`http://localhost:4000/expense/pagination?page=${1}&pagesize=${5}`,{headers:{"Authorization":token}})
             let allExpense=response.data.Data
                         
