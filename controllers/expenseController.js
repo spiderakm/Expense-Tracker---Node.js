@@ -1,10 +1,8 @@
 const expensedatabase=require('../models/expenseModel')
 const sequelize = require('../utils/db');
 const userDb = require('../models/userModel')
-const AWS = require('aws-sdk')
-const dotenv = require('dotenv');
-
-dotenv.config();
+const downloadDb = require('../models/downloadReport')
+const S3service = require('../services/S3service')
 
 //Adding the expense to the database
 exports.addExpense=async(req,res)=>{
@@ -75,61 +73,35 @@ exports.UploadReport = async (req,res) => {
             const expense=await expensedatabase.findAll({where:{userId:id}})
         
             const stringFilezExpense = JSON.stringify(expense)
-            const expenseFile = "expenseappdata.txt"
-            const fileName = await uploadToS3(stringFilezExpense, expenseFile);
-            res.status(201).json({ fileName, success:true })
+            const expenseFile = `Expense${id}/${new Date()}.txt`;
+            const fileUrl = await S3service.uploadToS3(stringFilezExpense, expenseFile);
+            console.log(fileUrl);
+            const timedate = `${new Date()}`
+            const data = await downloadDb.create({
+                url: fileUrl,
+                UserId: id,
+                time: timedate
+            })
+            const fetchData=await downloadDb.findAll({where:{UserId:id}})
+
+            res.json({url:fileUrl,alldata:fetchData,success:true})
+        
+
         }
 
+        
+
 
         
     } catch (error) {
-        console.log('error in file download',error);
+        console.log("error in download file",err)
+        res.json({Error:err})
     }
 
 
 }
 
-function uploadToS3(data,filename) {
-    
-    try {
-        const BUCKET_NAME = 'expensetrackrappdata';
-        const IAM_USER_KEY = process.env.AWS_ACCESS_KEY
-        const IAM_USER_SECERT = process.env.AWS_SECRET_KEY
-        
-    
-        let s3bucket = new AWS.S3({
-            accessKeyId:IAM_USER_KEY,
-            secrectAccessKey:IAM_USER_SECERT
-            
-        })
-    
-            var params = {
-                Bucket: BUCKET_NAME,
-                Key: filename,
-                Body: data
-            }
-            return new Promise((res,rej) => {
-    
-                s3bucket.upload(params, (err,s3response) => {
-                    if(err){
-                        rej('error in upload');
-                        console.log(err);
-    
-                    }else{
-                        
-                        res('success',s3response);
-                        console.log(s3response.Location);
-                        
-                        
-                    }
-                })
-        })
-    
-    } catch (error) {
-        console.log(error);
-    }
 
-}
 
 exports.paginateExpenses=async(req,res)=>{
     try{

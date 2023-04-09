@@ -1,3 +1,4 @@
+
 const amount=document.getElementById("amount")
 const description=document.getElementById("description")
 const category=document.getElementById("category")
@@ -26,6 +27,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
             document.getElementById("razorpay").style.visibility="hidden"
             document.getElementById("addText").innerHTML="Premium User"
             showLeaderBoard()
+            download()
         }
         pagination()
         
@@ -202,20 +204,47 @@ async function showLeaderBoard(){
 
 
 function download(){
-    const token=localStorage.getItem("token")
-    axios.get('http://localhost:4000/user/download', { headers: {"Authorization" : token} })
-    .then((response) => {
-        if(response.status === 201){
-            var a = document.createElement("a");
-            a.href = response.data.fileUrl;
-            a.download = 'myexpense.csv';
-            a.click();
-        } else {
-            throw new Error(response.data.message)
-        }
+    try {
+        const token=localStorage.getItem("token")
+        buttonDownload=document.createElement("input")
+        buttonDownload.type="button"
+        buttonDownload.value="Download"
+        buttonDownload.setAttribute("class","btn btn-warning border-3 text-white")
+        const reportText= document.createTextNode("Download Report")
+        document.getElementById("reportText").appendChild(reportText)
+        document.getElementById("buttons").appendChild(buttonDownload)
+        buttonDownload.addEventListener("click",async(e) => {
+            e.preventDefault()
+            const response = await axios.get('http://localhost:4000/user/download', { headers: {"Authorization" : token} })
+    
+            const a=document.createElement("a")
+            var urls = response.data.alldata
 
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+            console.log(urls);
+
+            for(let i=0;i<urls.length;i++){
+                showPreviousReport(urls[i])
+            }
+            a.href=response.data.url
+
+            a.click()
+        })
+
+    } catch (error) {
+        console.log("erron in download DOM",er);
+    }
+
+    
+
+}
+
+function showPreviousReport(data){
+    const parentNode = document.getElementById("allreport")
+    
+    const chilehtml = `<li>
+            <a href="${data.url}">Report File Created at ${data.time} </a>
+    </li>`
+    parentNode.innerHTML = parentNode.innerHTML + chilehtml;
+    
+
 }

@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense features</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+hclO+UvT/SQLa6UksX6UksX6UksX6UkstjU2k" crossorigin="anonymous"> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-4h5+sbp/JVg67ZJ5c9V91qrEioMc2ePDCoF8JwPO0KAV4q3FxdL7JQKiaZHyY9/uhS+SQ88R7VvpwKjNv7Vzow==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
     <style>
             Body style
         body {
@@ -184,7 +183,7 @@
             <div class="right-button">
                 <button id="razorpay"> Buy Premium Membership</button>
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-                <button onclick="download()" id="downloadexpense">Download File</button>
+
             </div>
         </form>
         
@@ -196,6 +195,7 @@
         <div class="reportText h2 text-white" id="reportText"></div>
         <div id="buttons"></div> <br><br>
         
+        <ul id="allreport"></ul>
         
         <hr>  
         <select name="pagesize" id="pagesize">
@@ -219,6 +219,10 @@
         <ol id="allExpenses"></ol> 
         <ul id="pagination"></ul>
         <ul id="leaderboard"></ul>
+
+
+
+        
 
         
         
