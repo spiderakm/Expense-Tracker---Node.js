@@ -2,6 +2,9 @@ const expensedatabase=require('../models/expenseModel')
 const sequelize = require('../utils/db');
 const userDb = require('../models/userModel')
 const AWS = require('aws-sdk')
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 //Adding the expense to the database
 exports.addExpense=async(req,res)=>{
@@ -65,14 +68,20 @@ exports.deleteExpense=async(req,res)=>{
 
 exports.UploadReport = async (req,res) => {
     try {
-        const id = req.user.id
-        const expense=await expensedatabase.findAll({where:{userId:id}})
-    
-        const stringFilezExpense = JSON.stringify(expense)
-        const expenseFile = '/tmp/uploadtos3.txt'
-        const fileName = await uploadToS3(stringFilezExpense, expenseFile);
-        console.log(fileName);
-        res.status(201).json({ fileName, success:true })
+        if(req.user.premium === null){
+            res.status(401).send("You are not eligble please take premium subscription")
+        }else{
+            const id = req.user.id
+            const expense=await expensedatabase.findAll({where:{userId:id}})
+        
+            const stringFilezExpense = JSON.stringify(expense)
+            const expenseFile = "expenseappdata.txt"
+            const fileName = await uploadToS3(stringFilezExpense, expenseFile);
+            res.status(201).json({ fileName, success:true })
+        }
+
+
+        
     } catch (error) {
         console.log('error in file download',error);
     }
@@ -84,13 +93,14 @@ function uploadToS3(data,filename) {
     
     try {
         const BUCKET_NAME = 'expensetrackrappdata';
-        const IAM_USER_KEY = process.env.IAM_USER_KEY
-        const IAM_USER_SECERT = process.env.IAM_USER_SECERT
+        const IAM_USER_KEY = process.env.AWS_ACCESS_KEY
+        const IAM_USER_SECERT = process.env.AWS_SECRET_KEY
         
     
         let s3bucket = new AWS.S3({
             accessKeyId:IAM_USER_KEY,
             secrectAccessKey:IAM_USER_SECERT
+            
         })
     
             var params = {
@@ -103,10 +113,12 @@ function uploadToS3(data,filename) {
                 s3bucket.upload(params, (err,s3response) => {
                     if(err){
                         rej('error in upload');
+                        console.log(err);
     
                     }else{
                         
                         res('success',s3response);
+                        console.log(s3response.Location);
                         
                         
                     }
