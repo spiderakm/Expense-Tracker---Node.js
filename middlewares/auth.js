@@ -1,12 +1,13 @@
 
 const User=require("../models/userModel")
 const jwt=require("jsonwebtoken")
-
+const dotenv = require('dotenv');
+dotenv.config();
 
 exports.userAuthontication= (req,res,next)=>{
   try{
       const token=req.header("Authorization")
-      const user=jwt.verify(token,"44d210c98f36c60b0b0a336bd537fdd0305cefee41aa7e8d73aca3f150ab8f38265bb32731c2c3a296327027ce4ddf4a569d2aa9e5e9494badcb6e9eb66899ad")
+      const user=jwt.verify(token,process.env.JWT_SECRET_KEY)
       console.log("userid is ",user)
       User.findByPk(user.UserId).then(user => {
         console.log(JSON.stringify(user))

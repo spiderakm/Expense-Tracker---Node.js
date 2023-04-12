@@ -1,13 +1,17 @@
 const Razorpay = require('razorpay')
 const orderDb = require('../models/orderModel')
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 exports.getPremium = async (req,res,next) =>{
     try {
         const Razor = new Razorpay({
-            key_id:"rzp_test_MBxgSv9nzhBJfJ",
-            key_secret:"a2uTbklHT3RyfS8D0xIQ1ix5"
+            key_id : process.env.RAZOR_PAY_KEY_ID,
+            key_secret : process.env.RAZOR_PAY_KEY_SECRET
         })
-        const amount = 3000
+        const amount = process.env.RAZOR_PAy_AMOUNT;
         Razor.orders.create({amount,currency:"INR"},async(err,order) => {
             if(err){
                 throw new Error("Error while starting order")
@@ -25,11 +29,11 @@ exports.getPremium = async (req,res,next) =>{
 
 
     } catch (error) {
-        console.log(error);
+        console.log("error in getpremium");
     }
 }
 function genrateToken(id,premium){
-    return jwt.sign({ UserId : id,premium },"44d210c98f36c60b0b0a336bd537fdd0305cefee41aa7e8d73aca3f150ab8f38265bb32731c2c3a296327027ce4ddf4a569d2aa9e5e9494badcb6e9eb66899ad")
+    return jwt.sign({ UserId : id,premium },process.env.JWT_SECRET_KEY)
 }
 
 
@@ -62,6 +66,6 @@ exports.updatePremiumStatus = async (req,res,next) => {
 
 
     } catch (error) {
-        console.log(error);
+        console.log("error in updatepremium");
     }
 }

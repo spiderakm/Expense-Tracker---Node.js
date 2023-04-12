@@ -22,7 +22,7 @@ exports.addExpense=async(req,res)=>{
         res.json({newExpense:data})
     }
     catch(err){
-        console.log(err)
+        console.log("error in addexpense")
         await t.rollback();
         res.json({Error:err})
     }
@@ -38,7 +38,7 @@ exports.getExpense=async(req,res)=>{
 
         res.json({allExpenses:data})
     }catch(err){
-
+        console.log("error in getexpense");
         res.json({Error:err})
     }
 }
@@ -94,7 +94,7 @@ exports.UploadReport = async (req,res) => {
 
         
     } catch (error) {
-        console.log("error in download file",err)
+        console.log("error in download file")
         res.json({Error:err})
     }
 
@@ -115,7 +115,7 @@ exports.paginateExpenses=async(req,res)=>{
     })
       res.json({Data:data})
     }catch(err){
-        console.log("pagination error-->",err)
+        console.log("pagination error-->")
         res.json({Error:err})
     }
 }

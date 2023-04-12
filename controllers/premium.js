@@ -19,7 +19,7 @@ exports.getLeaderBoard = async (req,res) => {
 
 
     } catch (error) {
-        console.log(error);
+        console.log("error in leaderboard");
     }
 }
 

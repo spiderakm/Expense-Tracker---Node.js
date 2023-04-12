@@ -2,8 +2,12 @@ const express=require("express")
 const bodyParser=require("body-parser")
 const cors=require("cors")
 const dotenv = require('dotenv');
-
 dotenv.config();
+const fs=require("fs")
+const path=require("path")
+const helmet = require('helmet')
+
+const morgan = require('morgan')
 
 const signup=require("./routes/user")
 const expenseDetail=require("./routes/expenseRoute")
@@ -12,14 +16,23 @@ const premiumRoute = require('./routes/premiumRoute')
 const forgotRoute = require('./routes/forgot')
 const downloadReport = require('./routes/download')
 
+
+
 const sequelize=require("./utils/db")
 const User=require("./models/userModel")
 const Expense=require("./models/expenseModel")
 const Order = require('./models/orderModel')
 const ForgotPassword = require('./models/forgotModle')
 const downloadReportModel = require('./models/downloadReport')
+const { Stream } = require("stream")
 
 const app=express()
+
+const infoInFile=fs.createWriteStream(path.join(__dirname,"request.log"),{flags:"a"})
+
+app.use(helmet())
+
+app.use(morgan('combined',{stream:infoInFile})) 
 app.use(cors())
 app.use(bodyParser.json())
 
@@ -30,6 +43,10 @@ app.use("/premium",premiumRoute)
 app.use("/password",forgotRoute)
 app.use("/user",downloadReport)
 
+
+app.use((req,res)=>{
+    res.sendFile(path.join(__dirname,`views/${req.url}`))
+})
 
 
 
@@ -49,7 +66,7 @@ downloadReportModel.belongsTo(User)
 
 sequelize.sync()
 .then(()=>{
-    app.listen(4000)
+    app.listen(process.env.PORT || 4000)
 })
 .catch((err)=>console.log("sync err-->",err))
 

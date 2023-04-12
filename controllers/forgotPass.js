@@ -46,7 +46,7 @@ exports.forgotpassword=async(req,res)=>{
             
 
     }catch(err){
-        console.log("error in forgot password-->",err)
+        console.log("error in forgot password-")
         res.json({Error:err})
     }
 
@@ -134,7 +134,7 @@ exports.updatepassword=async (req,res)=>{
         })
     }
     }catch(err){
-        console.log("update passwor error-->",err)
+        console.log("update passwor error-")
         res.json({Error:err})
     }
    

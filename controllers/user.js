@@ -1,6 +1,8 @@
 
 const User = require('../models/userModel');
 const bcrypt =  require('bcrypt')
+const dotenv = require('dotenv');
+dotenv.config();
 const jwt = require('jsonwebtoken')
 const {
     validateName,
@@ -9,7 +11,7 @@ const {
   } = require('../utils/validate')
 
 function genrateToken(id,premium){
-    return jwt.sign({ UserId : id,premium },"44d210c98f36c60b0b0a336bd537fdd0305cefee41aa7e8d73aca3f150ab8f38265bb32731c2c3a296327027ce4ddf4a569d2aa9e5e9494badcb6e9eb66899ad")
+    return jwt.sign({ UserId : id,premium },process.env.JWT_SECRET_KEY)
 }
 
 exports.createNewUser = async (req, res) => {
@@ -79,6 +81,6 @@ exports.authenticateUser = async (req,res) => {
         }
 
     } catch (error) {
-        console.log(error);
+        console.log("error in Authenticate");
     }
 }
