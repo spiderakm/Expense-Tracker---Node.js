@@ -28,11 +28,11 @@ const { Stream } = require("stream")
 
 const app=express()
 
-const infoInFile=fs.createWriteStream(path.join(__dirname,"request.log"),{flags:"a"})
+
 
 app.use(helmet())
 
-app.use(morgan('combined',{stream:infoInFile})) 
+
 app.use(cors())
 app.use(bodyParser.json())
 
