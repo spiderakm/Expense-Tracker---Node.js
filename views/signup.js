@@ -13,7 +13,7 @@ async function submitSignup(e){
         email:email.value,
         password:password.value
     }
-    const data=await axios.post(" http://127.0.0.1:4000/user/signup",my_obj)
+    const data=await axios.post(" http://43.205.129.209:4000/user/signup",my_obj)
     console.log(data)
         //Errors in front end
         if(data.data.success===false){
