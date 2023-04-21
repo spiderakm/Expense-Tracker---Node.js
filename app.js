@@ -24,13 +24,13 @@ const Expense=require("./models/expenseModel")
 const Order = require('./models/orderModel')
 const ForgotPassword = require('./models/forgotModle')
 const downloadReportModel = require('./models/downloadReport')
-const { Stream } = require("stream")
+// const { Stream } = require("stream")
 
 const app=express()
 
 
 
-app.use(helmet())
+// app.use(helmet())
 
 
 app.use(cors())
@@ -44,7 +44,9 @@ app.use("/password",forgotRoute)
 app.use("/user",downloadReport)
 
 
+
 app.use((req,res)=>{
+    console.log(req.url);
     res.sendFile(path.join(__dirname,`views/${req.url}`))
 })
 
