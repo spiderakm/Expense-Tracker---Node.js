@@ -17,7 +17,6 @@ function genrateToken(id,premium){
 exports.createNewUser = async (req, res) => {
     try{
         const{name,email,password} = req.body;
-        console.log(name,email,password)
 
         const user =  await User.findOne({
             where:{
@@ -72,9 +71,9 @@ exports.authenticateUser = async (req,res) => {
         }else{
             const passwordMatch = await bcrypt.compare(req.body.password,user.password)
             if(passwordMatch){
-                // res.redirect("http://localhost:4000/expense/add-expense")   
                 res.json({success:"Successfully logged In", token : genrateToken(user.id,user.premium)})
-                //console.log(user.id)
+                                // res.redirect("http://localhost:4000/expense/add-expense")   
+
             }else{
                 res.json({success:false,message:"Wrong Email or Password"})
             }

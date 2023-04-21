@@ -66,7 +66,7 @@ async function pagination(){
                     const response=await axios.get(`http://localhost:4000/expense/pagination?page=${page}&pagesize=${totalPagesize}`,{headers:{"Authorization":token}})
                     let allExpense=response.data.Data
                     for(let i=0;i<allExpense.length;i++){
-                        showOnScreen(response.data.Data[i])    
+                        showOnScreen(response.data.Data[i])
                         }
                     } 
                 pagination.appendChild(button)
