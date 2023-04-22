@@ -43,6 +43,10 @@ exports.getExpense=async(req,res)=>{
     }
 }
 
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 //deleting the expense from the database
 exports.deleteExpense=async(req,res)=>{
     try{

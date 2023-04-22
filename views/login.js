@@ -13,7 +13,7 @@ async function loginPage(e){
                 email:email.value,
                 password:password.value
             }
-            const data=await axios.post("http://13.127.104.98:4000/user/login",login_obj)
+            const data=await axios.post("/user/login",login_obj)
             //If email or password are wrong
             if(data.data.message){
                 const errorText=document.createTextNode(data.data.message)
